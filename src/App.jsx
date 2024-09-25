@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useState } from "react"
+import { Button, Card } from "react-bootstrap";
 
 
 function App() {
@@ -16,17 +17,21 @@ function App() {
     },[])
   return (
     <>
-    {
-        products ? products.map((item)=>{
+   <div className="container d-flex flex-wrap justify-content-center gap-5 mt-5">
+   { products ? products.map((item)=>{
             return <div key={item.id}>
-                <h3>{item.name}</h3>
-                <p>{item.description}</p>
-                <p>Price: ${item.price}</p>
-                <button>Add to Cart</button>
-                <hr />
-            </div>
+      <Card style={{ width: '18rem' }}>
+      <Card.Img variant="top" src={item.thumbnail} />
+      <Card.Body>
+        <Card.Title>{item.title.slice(0,10) + '...'}</Card.Title>
+        <Card.Text>{item.description.slice(0,40) + '...'}</Card.Text>
+        <Button variant="primary">ADD TO CART</Button>
+      </Card.Body>
+    </Card>
+  </div>
         }): <h2>No data found</h2>
     }
+   </div>
     </>
   )
 }
