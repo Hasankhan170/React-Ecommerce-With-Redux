@@ -5,13 +5,14 @@ import Navbar from "./components/Navbar";
 import { useDispatch } from "react-redux";
 
 import { addCartItem } from "./feature/carts/cartSlice";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 
 function App() {
 
     const [products,setProducts] = useState(null)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(()=>{
         fetch('https://dummyjson.com/products')
@@ -23,14 +24,13 @@ function App() {
     },[])
 
     const addToCart = (item)=>{
-        dispatch(addCartItem({
-            item,
-        }))
-
+        dispatch(addCartItem({ item}))
+        console.log(item);
+        navigate(`/SingleProduct/${item.id}`)
     }
   return (
     <>
-    <Outlet/>
+    
     <Navbar/>
    <div className="container d-flex flex-wrap justify-content-center gap-5 mt-5">
    { products ? products.map((item)=>{
@@ -44,9 +44,11 @@ function App() {
       </Card.Body>
     </Card>
   </div>
+  
         }): <h2>No data found</h2>
     }
    </div>
+   <Outlet/>
     </>
   )
 }
