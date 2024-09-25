@@ -4,6 +4,8 @@ import { Button, Card } from "react-bootstrap";
 import Navbar from "./components/Navbar";
 import { useDispatch } from "react-redux";
 
+import { addCartItem } from "./feature/carts/cartSlice";
+
 
 function App() {
 
@@ -20,8 +22,10 @@ function App() {
     },[])
 
     const addToCart = (item)=>{
-        alert(`Item Added : ${item.id}`)
-        dispatch(addToCart(item))
+        dispatch(addCartItem({
+            item,
+        }))
+
     }
   return (
     <>
@@ -34,7 +38,7 @@ function App() {
       <Card.Body>
         <Card.Title>{item.title.slice(0,10) + '...'}</Card.Title>
         <Card.Text>{item.description.slice(0,40) + '...'}</Card.Text>
-        <Button onClick={addToCart} variant="primary">ADD TO CART</Button>
+        <Button onClick={()=>addToCart(item)} variant="primary">ADD TO CART</Button>
       </Card.Body>
     </Card>
   </div>

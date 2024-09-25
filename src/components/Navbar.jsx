@@ -1,20 +1,14 @@
-import { Container } from "react-bootstrap"
+import { useSelector } from "react-redux"
 
 
 function Navbar() {
+    const selector = useSelector(state => state.cart.cartItems)
   return (
     <>
-     <Navbar className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
-        <Navbar.Toggle />
-        <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text>
-            Signed in as: <a href="#login">Mark Otto</a>
-          </Navbar.Text>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <div className="d-flex justify-content-center gap-5 m-5">
+    <h6>All products</h6>
+    <h6>Single Products {selector.length}</h6>
+    </div>
     </>
   )
 }
