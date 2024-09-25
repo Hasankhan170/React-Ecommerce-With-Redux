@@ -2,9 +2,9 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Button, Card } from "react-bootstrap";
 import Navbar from "./components/Navbar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { addCartItem } from "./feature/carts/cartSlice";
+import { addCartItem, removeCartItem } from "./feature/carts/cartSlice";
 import { Outlet, useNavigate } from "react-router-dom";
 
 
@@ -13,6 +13,7 @@ function App() {
     const [products,setProducts] = useState(null)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const selector = useSelector(state => state.cart.cartItems)
 
     useEffect(()=>{
         fetch('https://dummyjson.com/products')
@@ -28,6 +29,15 @@ function App() {
         console.log(item);
         navigate(`/SingleProduct/${item.id}`)
     }
+    const removeToCart = (item)=>{
+        if (!selector.length || !selector.find(cartItem => cartItem.id === item.id)) {
+            alert("You can't remove an item that is not in the cart");
+            return; 
+        }
+        dispatch(removeCartItem({item}))
+        console.log(item);
+        navigate(`/SingleProduct/${item.id}`)
+    }
   return (
     <>
     
@@ -40,7 +50,8 @@ function App() {
       <Card.Body>
         <Card.Title>{item.title.slice(0,10) + '...'}</Card.Title>
         <Card.Text>{item.description.slice(0,40) + '...'}</Card.Text>
-        <Button onClick={()=>addToCart(item)} variant="primary">ADD TO CART</Button>
+        <Button className="m-2" style={{width : '100%'}} onClick={()=>addToCart(item)} variant="primary">ADD TO CART</Button>
+        <Button className="m-2"style={{width : '100%'}} onClick={()=>removeToCart(item)} variant="danger">Remove Item</Button>
       </Card.Body>
     </Card>
   </div>
