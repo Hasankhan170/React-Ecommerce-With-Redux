@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import { useDispatch } from "react-redux";
 
 import { addCartItem } from "./feature/carts/cartSlice";
+import { Outlet } from "react-router-dom";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
     }
   return (
     <>
+    <Outlet/>
     <Navbar/>
    <div className="container d-flex flex-wrap justify-content-center gap-5 mt-5">
    { products ? products.map((item)=>{
