@@ -9,7 +9,7 @@ const SingleProduct = () => {
   return (
     <>
      <div>
-      <h1>Single Product Page</h1>
+      <h1>Single Product Page {id}</h1>
       {product ? (
         <div>
           <h2>{product.title}</h2>
