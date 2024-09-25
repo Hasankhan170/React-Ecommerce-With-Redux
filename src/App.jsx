@@ -1,11 +1,14 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import { Button, Card } from "react-bootstrap";
+import Navbar from "./components/Navbar";
+import { useDispatch } from "react-redux";
 
 
 function App() {
 
     const [products,setProducts] = useState(null)
+    const dispatch = useDispatch()
 
     useEffect(()=>{
         fetch('https://dummyjson.com/products')
@@ -15,8 +18,14 @@ function App() {
         })
         .catch(err => console.log(err));
     },[])
+
+    const addToCart = (item)=>{
+        alert(`Item Added : ${item.id}`)
+        dispatch(addToCart(item))
+    }
   return (
     <>
+    <Navbar/>
    <div className="container d-flex flex-wrap justify-content-center gap-5 mt-5">
    { products ? products.map((item)=>{
             return <div key={item.id}>
@@ -25,7 +34,7 @@ function App() {
       <Card.Body>
         <Card.Title>{item.title.slice(0,10) + '...'}</Card.Title>
         <Card.Text>{item.description.slice(0,40) + '...'}</Card.Text>
-        <Button variant="primary">ADD TO CART</Button>
+        <Button onClick={addToCart} variant="primary">ADD TO CART</Button>
       </Card.Body>
     </Card>
   </div>
